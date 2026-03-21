@@ -10,7 +10,6 @@ const Sidebar = ({ currentPage, setCurrentPage, isMobileMenuOpen, setIsMobileMen
     { id: 'services', label: 'Services', icon: Scissors },
     { id: 'categories', label: 'Categories', icon: Tag },
     { id: 'bookings', label: 'Bookings', icon: Calendar },
-    { id: 'approvals', label: 'Pending Approvals', icon: FileCheck },
     { id: 'notifications', label: 'Notifications', icon: Bell },
   ];
 

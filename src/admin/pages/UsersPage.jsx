@@ -343,18 +343,6 @@ const UsersPage = () => {
             <option value="">All Statuses</option>
             <option value="active">Active</option>
             <option value="inactive">Inactive</option>
-            <option value="suspended">Suspended</option>
-          </select>
-
-          {/* User Type Filter */}
-          <select
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={filters.user_type}
-            onChange={(e) => setFilters({...filters, user_type: e.target.value, page: 1})}
-          >
-            <option value="CUSTOMER">Customers</option>
-            <option value="">All Users</option>
-            <option value="ADMIN">Admins</option>
           </select>
         </div>
       </div>

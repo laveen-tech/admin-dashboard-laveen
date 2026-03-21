@@ -3,7 +3,7 @@ import { Users, Store, ShoppingBag, DollarSign, TrendingUp, TrendingDown, Clock 
 import StatCard from '../components/common/StatCard';
 import apiService from '../services/api.service';
 
-const DashboardPage = ({ token }) => {
+const DashboardPage = ({ token, setCurrentPage }) => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -67,8 +67,8 @@ const DashboardPage = ({ token }) => {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Dashboard Overview 1111</h1>
-          <p className="text-gray-600 mt-1">Welcome back! Here's what's happening today 111.</p>
+          <h1 className="text-3xl font-bold text-gray-900">Dashboard Overview</h1>
+          <p className="text-gray-600 mt-1">Welcome back! Here's what's happening today.</p>
         </div>
         <div className="flex items-center space-x-2 text-sm text-gray-600">
           <Clock className="w-4 h-4" />
@@ -185,11 +185,11 @@ const DashboardPage = ({ token }) => {
         <div className="bg-white rounded-lg shadow p-6">
           <h2 className="text-lg font-semibold mb-4 text-gray-900">Quick Actions</h2>
           <div className="space-y-3">
-            <button className="w-full px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition text-left flex items-center">
+            <button onClick={() => setCurrentPage('customers')} className="w-full px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition text-left flex items-center">
               <Users className="w-5 h-5 mr-3" />
               <span>Manage Users</span>
             </button>
-            <button className="w-full px-4 py-2 bg-purple-50 text-purple-600 rounded-lg hover:bg-purple-100 transition text-left flex items-center">
+            <button onClick={() => setCurrentPage('vendors')} className="w-full px-4 py-2 bg-purple-50 text-purple-600 rounded-lg hover:bg-purple-100 transition text-left flex items-center">
               <Store className="w-5 h-5 mr-3" />
               <span>View Vendors</span>
             </button>

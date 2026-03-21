@@ -314,15 +314,6 @@ const VendorsPage = () => {
       )
     },
     {
-      header: 'Rating',
-      render: (row) => (
-        <div className="flex items-center space-x-1">
-          <Star className="w-4 h-4 text-yellow-500" />
-          <span className="font-medium">{row.average_rating || '0.0'}</span>
-        </div>
-      )
-    },
-    {
       header: 'Verification',
       render: (row) => (
         <span className={`px-2 py-1 rounded-full text-xs font-medium ${
