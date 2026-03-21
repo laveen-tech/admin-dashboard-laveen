@@ -18,6 +18,7 @@ const useDebounce = (value, delay) => {
 };
 
 // Category Form Component
+// Enhanced Category Form Component with Responsive Design
 const CategoryForm = ({ category, onSubmit, onCancel, isSubmitting }) => {
   const [formData, setFormData] = useState({
     category_name: category?.category_name || '',
@@ -93,12 +94,17 @@ const CategoryForm = ({ category, onSubmit, onCancel, isSubmitting }) => {
     { name: 'Yellow', value: '#F59E0B' },
     { name: 'Pink', value: '#EC4899' },
     { name: 'Indigo', value: '#6366F1' },
-    { name: 'Teal', value: '#14B8A6' }
+    { name: 'Teal', value: '#14B8A6' },
+    { name: 'Orange', value: '#F97316' },
+    { name: 'Cyan', value: '#06B6D4' },
+    { name: 'Lime', value: '#84CC16' },
+    { name: 'Rose', value: '#F43F5E' }
   ];
 
   const iconOptions = [
     '✂️', '💇', '💆', '💅', '🧖', '💄', '🪒', '🎨', 
-    '💐', '🌸', '✨', '⭐', '💫', '🎯', '🏆', '👑'
+    '💐', '🌸', '✨', '⭐', '💫', '🎯', '🏆', '👑',
+    '🎭', '🌟', '💎', '🔥', '🌈', '🦋', '🌺', '🎪'
   ];
 
   return (
@@ -106,7 +112,7 @@ const CategoryForm = ({ category, onSubmit, onCancel, isSubmitting }) => {
       
       {/* Basic Information */}
       <div className="space-y-4">
-        <h4 className="font-semibold text-gray-900 border-b pb-2">Basic Information</h4>
+        <h4 className="font-semibold text-gray-900 border-b pb-2 text-sm sm:text-base">Basic Information</h4>
         
         {/* Category Name */}
         <div>
@@ -118,7 +124,7 @@ const CategoryForm = ({ category, onSubmit, onCancel, isSubmitting }) => {
             name="category_name"
             value={formData.category_name}
             onChange={handleChange}
-            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            className={`w-full px-3 sm:px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base transition ${
               errors.category_name ? 'border-red-500' : 'border-gray-300'
             }`}
             placeholder="e.g., Hair Cut, Facial, Massage"
@@ -142,7 +148,7 @@ const CategoryForm = ({ category, onSubmit, onCancel, isSubmitting }) => {
             name="description"
             value={formData.description}
             onChange={handleChange}
-            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            className={`w-full px-3 sm:px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base transition ${
               errors.description ? 'border-red-500' : 'border-gray-300'
             }`}
             rows="3"
@@ -162,83 +168,145 @@ const CategoryForm = ({ category, onSubmit, onCancel, isSubmitting }) => {
 
       {/* Visual Settings */}
       <div className="space-y-4">
-        <h4 className="font-semibold text-gray-900 border-b pb-2">Visual Settings</h4>
+        <h4 className="font-semibold text-gray-900 border-b pb-2 text-sm sm:text-base">Visual Settings</h4>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Icon */}
+        <div className="grid grid-cols-1 lg:grid-cols-1 gap-4 sm:gap-6">
+          
+          {/* ✅ Enhanced Icon Selector - Responsive */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-gray-700 mb-3">
               Icon (Optional)
             </label>
-            <div className="grid grid-cols-8 gap-2 mb-2">
+            
+            {/* Icon Grid - Responsive columns: 4 on mobile, 6 on tablet, 8 on desktop */}
+            <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-6 xl:grid-cols-8 gap-2 mb-3">
               {iconOptions.map(icon => (
                 <button
                   key={icon}
                   type="button"
                   onClick={() => setFormData(prev => ({ ...prev, icon }))}
-                  className={`p-2 text-2xl border rounded-lg hover:bg-gray-50 transition ${
-                    formData.icon === icon ? 'border-blue-500 bg-blue-50' : 'border-gray-300'
-                  }`}
+                  className={`
+                    aspect-square 
+                    flex items-center justify-center
+                    text-xl sm:text-2xl
+                    border-2 rounded-xl
+                    transition-all duration-200
+                    hover:scale-110 hover:shadow-lg active:scale-95
+                    ${formData.icon === icon 
+                      ? 'border-blue-500 bg-blue-50 shadow-lg scale-105 ring-2 ring-blue-200' 
+                      : 'border-gray-200 bg-white hover:border-blue-300 hover:bg-blue-50/50'
+                    }
+                  `}
+                  title={icon}
                 >
-                  {icon}
+                  <span className="select-none">{icon}</span>
                 </button>
               ))}
             </div>
-            <input
-              type="text"
-              name="icon"
-              value={formData.icon}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Or enter custom emoji"
-            />
+            
+            {/* Custom Icon Input */}
+            <div className="relative">
+              <input
+                type="text"
+                name="icon"
+                value={formData.icon}
+                onChange={handleChange}
+                className="w-full px-3 sm:px-4 py-2.5 pl-10 sm:pl-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base transition"
+                placeholder="Or enter custom emoji (e.g., 🎨)"
+                maxLength="20"
+              />
+              {formData.icon && (
+                <div className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 text-xl sm:text-2xl pointer-events-none">
+                  {formData.icon}
+                </div>
+              )}
+            </div>
+            
+            <p className="text-xs text-gray-500 mt-2">
+              Click an icon above or type your own emoji
+            </p>
           </div>
 
-          {/* Color */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Color
+          {/* ✅ Enhanced Color Selector - Responsive */}
+         
+        </div>
+          <div className="grid grid-cols-1 lg:grid-cols-1 gap-4 sm:gap-6">
+         <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">
+              Color Theme
             </label>
-            <div className="grid grid-cols-4 gap-2 mb-2">
+            
+            {/* Color Grid - Responsive */}
+            <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-4 xl:grid-cols-6 gap-2 mb-3">
               {colorOptions.map(color => (
                 <button
                   key={color.value}
                   type="button"
                   onClick={() => setFormData(prev => ({ ...prev, color: color.value }))}
-                  className={`h-10 rounded-lg border-2 transition ${
-                    formData.color === color.value ? 'border-gray-900 scale-110' : 'border-gray-300'
-                  }`}
+                  className={`
+                    aspect-square rounded-xl
+                    border-4 transition-all duration-200
+                    hover:scale-110 hover:shadow-lg active:scale-95
+                    ${formData.color === color.value 
+                      ? 'border-gray-900 scale-110 shadow-lg ring-2 ring-gray-400' 
+                      : 'border-white hover:border-gray-300'
+                    }
+                  `}
                   style={{ backgroundColor: color.value }}
                   title={color.name}
-                />
+                >
+                  {formData.color === color.value && (
+                    <div className="flex items-center justify-center h-full">
+                      <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-white drop-shadow-lg" />
+                    </div>
+                  )}
+                </button>
               ))}
             </div>
-            <input
-              type="color"
-              name="color"
-              value={formData.color}
-              onChange={handleChange}
-              className="w-full h-10 border border-gray-300 rounded-lg"
-            />
+            
+            {/* Custom Color Picker */}
+            <div className="flex items-center gap-3">
+              <input
+                type="color"
+                name="color"
+                value={formData.color}
+                onChange={handleChange}
+                className="w-16 h-10 sm:w-20 sm:h-12 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-gray-400 transition"
+                title="Choose custom color"
+              />
+              <span className="text-xs sm:text-sm text-gray-600 font-mono">
+                {formData.color}
+              </span>
+            </div>
+            
+            <p className="text-xs text-gray-500 mt-2">
+              Select a preset or choose custom color
+            </p>
           </div>
-        </div>
+          </div>
 
-        {/* Preview */}
-        <div className="p-4 bg-gray-50 rounded-lg border">
-          <p className="text-sm font-medium text-gray-700 mb-2">Preview</p>
-          <div 
-            className="inline-flex items-center px-4 py-2 rounded-lg text-white font-medium"
-            style={{ backgroundColor: formData.color }}
-          >
-            {formData.icon && <span className="mr-2 text-xl">{formData.icon}</span>}
-            {formData.category_name || 'Category Name'}
+        {/* ✅ Enhanced Preview - Responsive */}
+        <div className="p-4 sm:p-6 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border-2 border-gray-200">
+          <p className="text-xs sm:text-sm font-medium text-gray-700 mb-3">Preview</p>
+          <div className="flex items-center justify-center">
+            <div 
+              className="inline-flex items-center px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-white font-semibold shadow-lg hover:shadow-xl transition-all text-sm sm:text-base"
+              style={{ backgroundColor: formData.color }}
+            >
+              {formData.icon && (
+                <span className="mr-2 text-xl sm:text-2xl">{formData.icon}</span>
+              )}
+              <span className="break-words">
+                {formData.category_name || 'Category Name'}
+              </span>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Display Settings */}
       <div className="space-y-4">
-        <h4 className="font-semibold text-gray-900 border-b pb-2">Display Settings</h4>
+        <h4 className="font-semibold text-gray-900 border-b pb-2 text-sm sm:text-base">Display Settings</h4>
 
         {/* Display Order */}
         <div>
@@ -252,7 +320,7 @@ const CategoryForm = ({ category, onSubmit, onCancel, isSubmitting }) => {
             onChange={handleChange}
             min="1"
             max="100"
-            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            className={`w-full px-3 sm:px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base transition ${
               errors.display_order ? 'border-red-500' : 'border-gray-300'
             }`}
           />
@@ -265,35 +333,35 @@ const CategoryForm = ({ category, onSubmit, onCancel, isSubmitting }) => {
         </div>
 
         {/* Active Status */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 sm:space-x-3 p-3 sm:p-4 bg-gray-50 rounded-lg border">
           <input
             type="checkbox"
             id="is_active"
             name="is_active"
             checked={formData.is_active}
             onChange={handleChange}
-            className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
           />
-          <label htmlFor="is_active" className="text-sm font-medium text-gray-700">
-            Category is active and visible
+          <label htmlFor="is_active" className="text-xs sm:text-sm font-medium text-gray-700 cursor-pointer">
+            Category is active and visible to users
           </label>
         </div>
       </div>
 
-      {/* Action Buttons */}
-      <div className="flex justify-end space-x-3 pt-4 border-t">
+      {/* Action Buttons - Responsive */}
+      <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3 pt-4 border-t">
         <button
           type="button"
           onClick={onCancel}
           disabled={isSubmitting}
-          className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition disabled:opacity-50"
+          className="w-full sm:w-auto px-6 py-2.5 border border-gray-300 rounded-lg hover:bg-gray-50 transition disabled:opacity-50 text-sm sm:text-base font-medium"
         >
           Cancel
         </button>
         <button
           type="submit"
           disabled={isSubmitting}
-          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50 flex items-center"
+          className="w-full sm:w-auto px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50 flex items-center justify-center text-sm sm:text-base font-medium"
         >
           {isSubmitting ? (
             <>
