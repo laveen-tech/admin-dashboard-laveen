@@ -216,7 +216,7 @@ const ShopImagesManager = ({
                 {/* Image */}
                 <div className="w-full h-full rounded-lg border-2 border-gray-300 overflow-hidden bg-gray-100">
                   <img 
-                     src={`http://localhost:3005${image.url || image.document_url}`}
+                     src={`http://72.61.171.34:3000${image.url || image.document_url}`}
                     alt={`Gallery ${index + 1}`}
                     className="w-full h-full object-cover"
                   />

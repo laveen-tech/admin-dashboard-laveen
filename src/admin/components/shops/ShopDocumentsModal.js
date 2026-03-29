@@ -178,7 +178,7 @@ const ShopDocumentsModal = ({
                   <div className="aspect-video bg-gray-100 rounded-lg mb-3 flex items-center justify-center overflow-hidden">
                     {doc.document_type?.toLowerCase().includes('image') ? (
                       <img 
-                        src={doc.document_url} 
+                        src={`http://72.61.171.34:3000${doc.document_url}`} 
                         alt={doc.document_type}
                         className="w-full h-full object-cover"
                       />
@@ -209,7 +209,7 @@ const ShopDocumentsModal = ({
                         onClick={() => handlePreview(doc)}
                         className="flex-1 px-3 py-1.5 text-xs bg-blue-50 text-blue-600 rounded hover:bg-blue-100 transition flex items-center justify-center"
                       >
-                        <Eye className="w-3 h-3 mr-1" />
+                      <Eye className="w-3 h-3 mr-1" />
                         View
                       </button>
                       <a
