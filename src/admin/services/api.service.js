@@ -224,9 +224,9 @@ class ApiService {
     return this.put(`/admin/vendors/${vendorId}/verification`, verificationData);
   }
 
-  async updateDocumentVerification(documentId, verificationData) {
-    return this.put(`/admin/documents/${documentId}/verification`, verificationData);
-  }
+  // async updateDocumentVerification(documentId, verificationData) {
+  //   return this.put(`/admin/documents/${documentId}/verification`, verificationData);
+  // }
 
   // ============================================
   // ADMIN - SHOP MANAGEMENT
