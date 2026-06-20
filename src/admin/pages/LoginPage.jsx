@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { AlertCircle, Eye, EyeOff, Lock, Phone } from 'lucide-react';
+import { AlertCircle, Eye, EyeOff, Lock, Phone, X } from 'lucide-react';
+
 
 const LoginPage = () => {
   const [credentials, setCredentials] = useState({
@@ -18,7 +19,7 @@ const LoginPage = () => {
 
   const from = location.state?.from?.pathname || '/admin/dashboard';
 
-  const handleSubmit = async (e) => {
+   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
@@ -29,17 +30,19 @@ const LoginPage = () => {
     } catch (err) {
       console.error('Login error:', err);
       setError(err.message || 'Invalid credentials. Please try again.');
+
+      setTimeout(() => {
+        setError('');
+      }, 10000);
     } finally {
       setLoading(false);
     }
   };
-
   const handleChange = (e) => {
     setCredentials({
       ...credentials,
       [e.target.name]: e.target.value
     });
-    setError(''); // Clear error on input change
   };
 
   return (
@@ -54,7 +57,7 @@ const LoginPage = () => {
               <Lock className="w-8 h-8 text-white" />
             </div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              Saloob Booking System
+              Saloon Booking System
             </h1>
             <p className="text-gray-600">
               Sign in to access the admin dashboard
@@ -62,12 +65,26 @@ const LoginPage = () => {
           </div>
 
           {/* Error Message */}
-          {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 flex items-start">
-              <AlertCircle className="w-5 h-5 text-red-500 mt-0.5 mr-3 flex-shrink-0" />
-              <p className="text-sm text-red-700">{error}</p>
-            </div>
-          )}
+         {error && (
+  <div className="bg-red-50 border-l-4 border-red-500 rounded-lg p-4 flex items-start justify-between gap-3">
+    <div className="flex items-start gap-3">
+      <AlertCircle className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
+      <div>
+        <p className="text-sm font-semibold text-red-800">Login Failed</p>
+        <p className="text-sm text-red-700 mt-0.5">{error}</p>
+      </div>
+    </div>
+    <button
+      onClick={() => setError('')}
+      className="text-red-400 hover:text-red-600 transition flex-shrink-0 mt-0.5"
+      aria-label="Dismiss error"
+    >
+      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+)}
 
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-5">

@@ -7,6 +7,7 @@ import Table from '../components/common/Table';
 import Modal from '../components/common/Modal';
 import apiService from '../services/api.service';
 
+
 // Utility hook for debouncing
 const useDebounce = (value, delay) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -58,6 +59,7 @@ const ServiceForm = ({ service, onSubmit, onCancel, isSubmitting }) => {
     };
     loadCategories();
   }, []);
+
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -416,10 +418,13 @@ const ServiceDetailsModal = ({ service, onClose, onEdit }) => {
                 <h4 className="text-xl font-bold text-gray-900 mb-1">
                   {service.service_name}
                 </h4>
-                <p className="text-sm text-gray-600 flex items-center">
-                  <Tag className="w-4 h-4 mr-1" />
-                  {service.category}
-                </p>
+               <p className="text-sm text-gray-600 flex items-center mt-1">
+  <Tag className="w-4 h-4 mr-1" />
+  Category:&nbsp;
+  <span className="inline-flex items-center px-2 py-0.5 ml-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
+    {service.category}
+  </span>
+</p>
               </div>
               {getAvailabilityBadge(service.is_available)}
             </div>
@@ -437,6 +442,15 @@ const ServiceDetailsModal = ({ service, onClose, onEdit }) => {
           <p className="text-sm text-gray-700">{service.description}</p>
         </div>
       )}
+<div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+  <h5 className="font-semibold mb-2 text-blue-900 flex items-center">
+    <Tag className="w-4 h-4 mr-2" />
+    Category
+  </h5>
+  <span className="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm font-semibold rounded-lg">
+    {service.category}
+  </span>
+</div>
 
       {/* Pricing & Duration */}
       <div className="grid grid-cols-2 gap-4">
@@ -553,6 +567,14 @@ const ServicesPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
+  const [categoryOptions, setCategoryOptions] = useState([]);
+
+  useEffect(() => {
+    apiService.getAllCategories({ is_active: 'true', limit: 100 })
+      .then(res => setCategoryOptions(res.data?.categories || []))
+      .catch(() => {});
+  }, []);
+
   const debouncedSearch = useDebounce(filters.search, 400);
 
   const fetchServices = useCallback(async () => {
@@ -659,17 +681,20 @@ const ServicesPage = () => {
       render: (row) => <span className="font-mono text-xs">{row.service_id}</span>
     },
     {
-      header: 'Service Name',
-      render: (row) => (
-        <div className="flex items-center space-x-2">
-          <Scissors className="w-5 h-5 text-blue-600" />
-          <div>
-            <span className="font-medium block">{row.service_name}</span>
-            <span className="text-xs text-gray-500">{row.category}</span>
-          </div>
-        </div>
-      )
-    },
+  header: 'Service Name',
+  render: (row) => (
+    <div className="flex items-center space-x-2">
+      <Scissors className="w-5 h-5 text-blue-600 flex-shrink-0" />
+      <div>
+        <span className="font-medium block">{row.service_name}</span>
+        <span className="inline-flex items-center gap-1 mt-0.5 px-2 py-0.5 bg-blue-50 text-blue-700 text-xs rounded-full border border-blue-200">
+          <Tag className="w-3 h-3" />
+          {row.category || '—'}
+        </span>
+      </div>
+    </div>
+  )
+},
     {
       header: 'Duration',
       render: (row) => (
@@ -679,6 +704,18 @@ const ServicesPage = () => {
         </span>
       )
     },
+{
+  header: 'Created By',
+  render: (row) => (
+    <span className={`text-sm font-medium ${
+      row.created_by_label === 'Admin' 
+        ? 'text-purple-700' 
+        : 'text-blue-600'
+    }`}>
+      {row.created_by_label === 'Admin' ? '🔧 Admin' : `🏪 ${row.created_by_label}`}
+    </span>
+  )
+},
     {
       header: 'Base Price',
       render: (row) => (
@@ -789,22 +826,18 @@ const ServicesPage = () => {
           </div>
 
           {/* Category Filter */}
-          <select
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={filters.category}
-            onChange={(e) => setFilters({...filters, category: e.target.value, page: 1})}
-          >
-            <option value="">All Categories</option>
-            <option value="Hair Cut">Hair Cut</option>
-            <option value="Hair Styling">Hair Styling</option>
-            <option value="Hair Color">Hair Color</option>
-            <option value="Beard & Shave">Beard & Shave</option>
-            <option value="Facial">Facial</option>
-            <option value="Massage">Massage</option>
-            <option value="Spa">Spa</option>
-            <option value="Makeup">Makeup</option>
-            <option value="Other">Other</option>
-          </select>
+        <select
+  className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+  value={filters.category}
+  onChange={(e) => setFilters({...filters, category: e.target.value, page: 1})}
+>
+  <option value="">All Categories</option>
+  {categoryOptions.map(cat => (
+    <option key={cat.category_id} value={cat.category_name}>
+      {cat.icon ? `${cat.icon} ` : ''}{cat.category_name}
+    </option>
+  ))}
+</select>
 
           {/* Availability Filter */}
           <select

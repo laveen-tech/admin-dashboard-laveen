@@ -407,6 +407,23 @@ class ApiService {
   async getVendorServicesForBooking(vendorId) {
     return this.get(`/admin/vendors/${vendorId}/services`);
   }
+
+  async updateDocumentVerification(documentId, data) {
+    const response = await fetch(
+        `${API_BASE_URL}/admin/vendors/documents/${documentId}/verify`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${this.authToken}`
+          },
+          body: JSON.stringify(data)
+        }
+    );
+
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
+  }
 }
 
 

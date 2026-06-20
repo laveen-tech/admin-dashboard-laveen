@@ -60,7 +60,7 @@ const PaymentBadge = ({ status }) => {
 // Create Booking Form Component
 const CreateBookingForm = ({ onSubmit, onCancel, isSubmitting }) => {
   const [formData, setFormData] = useState({
-    user_id: '',
+    customer_id: '',
     vendor_id: '',
     booking_date: '',
     services: [],
@@ -269,8 +269,8 @@ const CreateBookingForm = ({ onSubmit, onCancel, isSubmitting }) => {
   const validate = () => {
     const newErrors = {};
 
-    if (!formData.user_id) {
-      newErrors.user_id = 'Customer is required';
+    if (!formData.customer_id) {
+      newErrors.customer_id = 'Customer is required';
     }
 
     if (!formData.vendor_id) {
@@ -300,7 +300,7 @@ const CreateBookingForm = ({ onSubmit, onCancel, isSubmitting }) => {
     e.preventDefault();
     if (validate()) {
       const bookingData = {
-        user_id: parseInt(formData.user_id),
+        customer_id: parseInt(formData.customer_id),
         vendor_id: parseInt(formData.vendor_id),
         booking_date: formData.booking_date,
         total_amount: calculateTotal(),
@@ -333,8 +333,8 @@ const CreateBookingForm = ({ onSubmit, onCancel, isSubmitting }) => {
               Customer <span className="text-red-500">*</span>
             </label>
             <select
-              name="user_id"
-              value={formData.user_id}
+              name="customer_id"
+              value={formData.customer_id}
               onChange={handleChange}
               className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                 errors.user_id ? 'border-red-500' : 'border-gray-300'
@@ -970,13 +970,24 @@ const BookingsPage = () => {
           <p className="text-gray-600 mt-1">Manage all bookings and appointments</p>
         </div>
         <div className="flex space-x-3">
-          <button
-            onClick={fetchBookings}
-            className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition flex items-center"
-          >
-            <RefreshCw className="w-4 h-4 mr-2" />
-            Refresh
-          </button>
+         <button
+  onClick={() => {
+    setFilters({
+      booking_status: '',
+      payment_status: '',
+      search: '',
+      date_from: '',
+      date_to: '',
+      page: 1,
+      limit: 10
+    });
+    // fetchBookings will re-run automatically via the useEffect dependency on `filters`
+  }}
+  className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition flex items-center"
+>
+  <RefreshCw className="w-4 h-4 mr-2" />
+  Refresh
+</button>
           <button
             onClick={() => setIsCreateModalOpen(true)}
             className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium flex items-center shadow-lg"
