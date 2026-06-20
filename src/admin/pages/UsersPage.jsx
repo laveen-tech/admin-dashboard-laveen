@@ -240,7 +240,7 @@ const UsersPage = () => {
     },
     { 
       header: 'Email',
-      render: (row) => <span className="text-sm break-all max-w-[180px] block">{row.email || '—'}</span>
+      render: (row) => <span className="text-sm break-all block" style={{wordBreak: 'break-all', maxWidth: '200px'}}>{row.email || '—'}</span>
     },
     { header: 'Phone', field: 'phone_number' },
     { 
