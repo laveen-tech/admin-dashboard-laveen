@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { AlertCircle, Eye, EyeOff, Lock, Phone, X } from 'lucide-react';
+import { AlertCircle, Eye, EyeOff, Lock, Phone } from 'lucide-react';
 
 
 const LoginPage = () => {

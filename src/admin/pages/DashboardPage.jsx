@@ -1,7 +1,16 @@
+<<<<<<< HEAD
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { 
   Store, Search, Eye, CheckCircle, XCircle, Clock, User,
   MapPin, Phone, Mail, Star, DollarSign, Calendar, RefreshCw
+=======
+import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom'; // ✅ Import useNavigate
+import {
+  Users, Store, ShoppingBag, DollarSign,
+  TrendingUp, Calendar, AlertCircle,
+  ArrowRight, RefreshCw, FileText, Bell, Building2, Scissors
+>>>>>>> cc72c060 (Commit)
 } from 'lucide-react';
 import Table from '../components/common/Table';
 import Modal from '../components/common/Modal';
