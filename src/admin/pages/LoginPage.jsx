@@ -31,9 +31,7 @@ const LoginPage = () => {
       console.error('Login error:', err);
       setError(err.message || 'Invalid credentials. Please try again.');
 
-      setTimeout(() => {
-        setError('');
-      }, 10000);
+
     } finally {
       setLoading(false);
     }
@@ -43,6 +41,7 @@ const LoginPage = () => {
       ...credentials,
       [e.target.name]: e.target.value
     });
+    if (error) setError('');
   };
 
   return (

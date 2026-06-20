@@ -277,6 +277,10 @@ const fetchVendors = useCallback(async () => {
     { header: 'Owner', render: (row) => row.name || 'Unknown' },
     { header: 'Phone', field: 'phone_number' },
     {
+      header: 'Email',
+      render: (row) => <span className="text-sm" style={{wordBreak: 'break-all', maxWidth: '200px', display: 'block'}}>{row.email || '—'}</span>
+    },
+    {
       header: 'Location',
       render: (row) => <span className="text-sm">{row.shop_city || row.user_city || 'N/A'}</span>
     },

@@ -182,13 +182,13 @@ const ShopForm = ({ shop, onSubmit, onCancel, isSubmitting }) => {
     state:              shop?.state              ?? '',
     latitude:           shop?.latitude           ?? '',
     longitude:          shop?.longitude          ?? '',
-    open_time:          trimTime(shop?.open_time)          || '09:00',
-    close_time:         trimTime(shop?.close_time)         || '20:00',
+    open_time:          trimTime(shop?.open_time ?? shop?.opening_time ?? shop?.open_at) || '09:00',
+    close_time:         trimTime(shop?.close_time ?? shop?.closing_time ?? shop?.close_at) || '20:00',
     break_start_time:   trimTime(shop?.break_start_time)   ?? '',
     break_end_time:     trimTime(shop?.break_end_time)     ?? '',
     weekly_holiday:     shop?.weekly_holiday     ?? '',
-    no_of_seats:        shop?.no_of_seats        ?? 1,
-    no_of_workers:      shop?.no_of_workers      ?? 1,
+    no_of_seats:        shop?.no_of_seats ?? shop?.seat_count ?? shop?.seats ?? shop?.num_seats ?? 1,
+    no_of_workers:      shop?.no_of_workers ?? shop?.num_workers ?? shop?.workers ?? 1,
     business_license:   shop?.business_license   ?? '',
     tax_number:         shop?.tax_number         ?? '',
     bank_account_number: shop?.bank_account_number ?? '',
@@ -206,13 +206,13 @@ const ShopForm = ({ shop, onSubmit, onCancel, isSubmitting }) => {
         state:               shop.state              ?? '',
         latitude:            shop.latitude           ?? '',
         longitude:           shop.longitude          ?? '',
-        open_time:           trimTime(shop.open_time)          || '09:00',
-        close_time:          trimTime(shop.close_time)         || '20:00',
+        open_time:           trimTime(shop.open_time ?? shop.opening_time ?? shop.open_at) || '09:00',
+        close_time:          trimTime(shop.close_time ?? shop.closing_time ?? shop.close_at) || '20:00',
         break_start_time:    trimTime(shop.break_start_time)   ?? '',
         break_end_time:      trimTime(shop.break_end_time)     ?? '',
         weekly_holiday:      shop.weekly_holiday     ?? '',
-        no_of_seats:         shop.no_of_seats        ?? 1,
-        no_of_workers:       shop.no_of_workers      ?? 1,
+        no_of_seats:         shop.no_of_seats ?? shop.seat_count ?? shop.seats ?? shop.num_seats ?? 1,
+        no_of_workers:       shop.no_of_workers ?? shop.num_workers ?? shop.workers ?? 1,
         business_license:    shop.business_license   ?? '',
         tax_number:          shop.tax_number         ?? '',
         bank_account_number: shop.bank_account_number ?? '',
@@ -892,7 +892,7 @@ const columns = [
         <div className="space-y-4">
           <p className="text-gray-700">
             Are you sure you want to deactivate shop <strong>{shopToDelete?.shop_name}</strong>?
-            Its verification status will be set to <strong>rejected</strong>.
+            The shop owner's account status will be set to <strong>inactive</strong>.
           </p>
           <div className="flex justify-end space-x-3">
             <button onClick={() => setIsDeleteModalOpen(false)} className="px-4 py-2 border rounded-lg hover:bg-gray-50 transition">Cancel</button>

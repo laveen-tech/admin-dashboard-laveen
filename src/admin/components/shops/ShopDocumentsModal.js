@@ -5,7 +5,7 @@ import {
 } from 'lucide-react';
 import apiService from '../../services/api.service';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://72.61.171.34:3000';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://saloon-booking-management-production.up.railway.app';
 
 const getFullUrl = (url) => {
   if (!url) return '';
@@ -134,6 +134,11 @@ const ShopDocumentsModal = ({
   const pendingCount   = documents.filter(d => d.verification_status === 'pending').length;
   const approvedCount  = documents.filter(d => d.verification_status === 'approved').length;
   const rejectedCount  = documents.filter(d => d.verification_status === 'rejected').length;
+  // BUG 31: All docs must be approved before Final Approve is enabled
+  // If no docs uploaded, still allow final approval
+  const allDocumentsApproved = documents.length === 0 || documents.every(
+    doc => doc.verification_status === 'approved' || doc.approval_status === 'APPROVED'
+  );
 
   return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -331,9 +336,14 @@ const ShopDocumentsModal = ({
                           ⚠️ {pendingCount} document(s) still pending review
                         </p>
                     )}
-                    {pendingCount === 0 && rejectedCount === 0 && (
+                    {pendingCount === 0 && rejectedCount === 0 && documents.length > 0 && (
                         <p className="text-sm text-green-600">
-                          ✅ All documents reviewed
+                          ✅ All documents approved — ready for final approval
+                        </p>
+                    )}
+                    {!allDocumentsApproved && pendingCount === 0 && rejectedCount > 0 && (
+                        <p className="text-sm text-red-600">
+                          ❌ Rejected documents must be resolved before final approval
                         </p>
                     )}
                     {rejectedCount > 0 && pendingCount === 0 && (
@@ -361,11 +371,12 @@ const ShopDocumentsModal = ({
                           <><XCircle className="w-4 h-4 mr-2" />Reject Shop</>
                       )}
                     </button>
-                    {/* ✅ Approve button always visible, only disabled during submission */}
+                    {/* BUG 31: Final Approve disabled until all documents are approved */}
                     <button
                         onClick={handleApproveShop}
-                        disabled={isSubmitting}
-                        className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition disabled:opacity-50 flex items-center"
+                        disabled={isSubmitting || !allDocumentsApproved}
+                        title={!allDocumentsApproved ? 'All documents must be approved before approving the shop' : ''}
+                        className={`px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition flex items-center ${(!allDocumentsApproved || isSubmitting) ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                       {isSubmitting ? (
                           <><Loader className="w-4 h-4 animate-spin mr-2" />Approving...</>
