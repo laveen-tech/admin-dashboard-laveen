@@ -314,9 +314,9 @@ class ApiService {
     return this.upload(`/admin/vendors/${vendorId}/documents`, formData);
   }
 
-  async updateDocumentVerification(documentId, verificationData) {
-    return this.put(`/admin/documents/${documentId}/verification`, verificationData);
-  }
+  // async updateDocumentVerification(documentId, verificationData) {
+  //   return this.put(`/admin/documents/${documentId}/verification`, verificationData);
+  // }
 
   async deleteVendorDocument(documentId) {
     return this.delete(`/admin/documents/${documentId}`);
@@ -408,22 +408,22 @@ class ApiService {
     return this.get(`/admin/vendors/${vendorId}/services`);
   }
 
-  async updateDocumentVerification(documentId, data) {
-    const response = await fetch(
-        `${API_BASE_URL}/admin/vendors/documents/${documentId}/verify`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${this.authToken}`
-          },
-          body: JSON.stringify(data)
-        }
-    );
+  // async updateDocumentVerification(documentId, data) {
+  //   const response = await fetch(
+  //       `${API_BASE_URL}/admin/vendors/documents/${documentId}/verify`,
+  //       {
+  //         method: 'PUT',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //           Authorization: `Bearer ${this.authToken}`
+  //         },
+  //         body: JSON.stringify(data)
+  //       }
+  //   );
 
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    return response.json();
-  }
+  //   if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  //   return response.json();
+  // }
 }
 
 
