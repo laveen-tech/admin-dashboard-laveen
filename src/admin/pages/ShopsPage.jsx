@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import {
   Store, Search, Eye, Edit, Trash2, Plus, Save,
   MapPin, Phone, Clock, Users, CheckCircle, XCircle,
-  Image as ImageIcon, FileText, AlertCircle, RefreshCw, Settings
+  FileText, AlertCircle, RefreshCw, Settings
 } from 'lucide-react';
 import Table from '../components/common/Table';
 import Modal from '../components/common/Modal';
@@ -669,22 +669,6 @@ const handleEditShop = (shop) => {
     setIsServicesModalOpen(true);
   };
 
-  const handleManageImages = async (shop) => {
-    try {
-      const response = await apiService.getVendorById(shop.user_id);
-      const vendorData = response.data || response;
-      const allDocs = vendorData.documents || [];
-      setSelectedShop({
-        ...shop,
-        profile_image: allDocs.find(d => d.document_type === 'shop_profile_image' && d.status !== 'inactive') || null,
-        gallery_images: allDocs.filter(d => d.document_type === 'shop_gallery_image' && d.status !== 'inactive')
-      });
-      setIsImagesModalOpen(true);
-    } catch (error) {
-      alert('Failed to load images. Please try again.');
-    }
-  };
-
   const handleUploadProfileImage = async (file) => {
     if (!selectedShop) return;
     setIsUploading(true);
@@ -881,6 +865,17 @@ const columns = [
           <VendorServicesModal shop={selectedShop} onClose={() => setIsServicesModalOpen(false)} />
         </Modal>
       )}
+
+      <Modal isOpen={isDetailsModalOpen} onClose={() => setIsDetailsModalOpen(false)}
+        title="Shop Details" size="large">
+        {selectedShop && (
+          <ShopDetailsModal
+            shop={selectedShop}
+            onClose={() => setIsDetailsModalOpen(false)}
+            onEdit={() => { setIsDetailsModalOpen(false); setEditMode(true); setIsFormModalOpen(true); }}
+          />
+        )}
+      </Modal>
 
       <Modal isOpen={isFormModalOpen} onClose={() => setIsFormModalOpen(false)}
         title={editMode ? 'Edit Shop' : 'Create New Shop'} size="large">

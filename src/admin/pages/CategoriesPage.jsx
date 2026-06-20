@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { 
-  Tag, Search, Eye, Edit, Trash2, Plus, X, Save,
+  Tag, Search, Eye, Edit, Trash2, Plus, Save,
   Grid, List, CheckCircle, XCircle, AlertCircle
 } from 'lucide-react';
 import Table from '../components/common/Table';

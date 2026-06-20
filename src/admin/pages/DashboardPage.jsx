@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom'; // ✅ Import useNavigate
 import {
-  Users, Store, ShoppingBag, DollarSign, Clock,
-  TrendingUp, Calendar, CheckCircle, XCircle, AlertCircle,
-  ArrowRight, RefreshCw, Star, Package, FileText, Bell, Building2, Scissors
+  Users, Store, ShoppingBag, DollarSign,
+  TrendingUp, Calendar, AlertCircle,
+  ArrowRight, RefreshCw, FileText, Bell, Building2, Scissors
 } from 'lucide-react';
 import apiService from '../services/api.service';
 

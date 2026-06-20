@@ -1,22 +1,12 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 
-import { 
-  Users, Search, Eye, Trash2, CheckCircle, XCircle,
-  User, Phone, Mail, MapPin, Calendar, Shield
+import {
+  Search, Eye, Trash2, CheckCircle, XCircle,
+  User, Phone, Mail, MapPin, Shield
 } from 'lucide-react';
 import Table from '../components/common/Table';
 import Modal from '../components/common/Modal';
 import apiService from '../services/api.service';
-
-// Utility hook for debouncing search
-const useDebounce = (value, delay) => {
-  const [debouncedValue, setDebouncedValue] = useState(value);
-  useEffect(() => {
-    const handler = setTimeout(() => setDebouncedValue(value), delay);
-    return () => clearTimeout(handler);
-  }, [value, delay]);
-  return debouncedValue;
-};
 
 // User Details Modal Component
 const UserDetailsModal = ({ user, onClose, onStatusChange }) => {
