@@ -53,45 +53,12 @@ const VendorDetailsModal = ({ vendor, onClose, onUpdate }) => {
 
   return (
     <div className="space-y-4 sm:space-y-6 max-h-[80vh] overflow-y-auto px-1">
-<<<<<<< HEAD
-      
-      {/* Shop Info Card - Responsive */}
-=======
       {/* Shop Info */}
->>>>>>> 5467c3d (Bugs resolved)
       <div className="p-3 sm:p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg border border-purple-200">
         <div className="flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4">
           <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center text-white flex-shrink-0">
             <Store className="w-6 h-6 sm:w-8 sm:h-8" />
           </div>
-<<<<<<< HEAD
-          <div className="flex-1 w-full">
-            <h4 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 break-words">
-              {vendor.shop_name || 'Shop Name Not Set'}
-            </h4>
-            {/* ✅ Fixed Grid - Responsive columns */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-              <div className="flex items-start sm:items-center text-gray-700">
-                <User className="w-4 h-4 mr-2 text-purple-500 flex-shrink-0 mt-0.5 sm:mt-0" />
-                <span className="break-words min-w-0">{vendor.name || 'Owner Unknown'}</span>
-              </div>
-              <div className="flex items-start sm:items-center text-gray-700">
-                <Phone className="w-4 h-4 mr-2 text-purple-500 flex-shrink-0 mt-0.5 sm:mt-0" />
-                <span className="break-words min-w-0">{vendor.phone_number || 'No phone'}</span>
-              </div>
-              {/* ✅ Email - Full width on mobile, half on desktop */}
-              <div className="flex items-start sm:items-center text-gray-700 sm:col-span-2 lg:col-span-1">
-                <Mail className="w-4 h-4 mr-2 text-purple-500 flex-shrink-0 mt-0.5 sm:mt-0" />
-                <span className="break-all min-w-0 text-xs sm:text-sm">{vendor.email || 'No email'}</span>
-              </div>
-              {/* ✅ Location - Full width on mobile, half on desktop */}
-              <div className="flex items-start sm:items-center text-gray-700 sm:col-span-2 lg:col-span-1">
-                <MapPin className="w-4 h-4 mr-2 text-purple-500 flex-shrink-0 mt-0.5 sm:mt-0" />
-                <span className="break-words min-w-0">
-                  {vendor.shop_city && vendor.shop_state 
-                    ? `${vendor.shop_city}, ${vendor.shop_state}` 
-                    : 'No location'}
-=======
           <div className="flex-1 w-full min-w-0">
             <h4 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 break-words">
               {vendor.shop_name || 'Shop Name Not Set'}
@@ -115,7 +82,6 @@ const VendorDetailsModal = ({ vendor, onClose, onUpdate }) => {
                   {vendor.shop_city && vendor.shop_state
                     ? `${vendor.shop_city}, ${vendor.shop_state}`
                     : (vendor.user_city && vendor.state ? `${vendor.user_city}, ${vendor.state}` : 'No location')}
->>>>>>> 5467c3d (Bugs resolved)
                 </span>
               </div>
             </div>
@@ -123,10 +89,6 @@ const VendorDetailsModal = ({ vendor, onClose, onUpdate }) => {
         </div>
       </div>
 
-<<<<<<< HEAD
-      {/* Shop Details - Responsive */}
-=======
->>>>>>> 5467c3d (Bugs resolved)
       {vendor.shop_address && (
         <div className="p-3 sm:p-4 bg-white border rounded-lg">
           <h5 className="font-semibold mb-2 text-sm sm:text-base">Shop Address</h5>
@@ -134,19 +96,11 @@ const VendorDetailsModal = ({ vendor, onClose, onUpdate }) => {
         </div>
       )}
 
-<<<<<<< HEAD
-      {/* Verification Status - Responsive Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 p-3 sm:p-4 bg-white border rounded-lg">
-        <div>
-          <p className="text-xs sm:text-sm text-gray-600 mb-1">Verification Status</p>
-          {getVerificationBadge(vendor.status)}
-=======
       {/* Verification + Account Status */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 p-3 sm:p-4 bg-white border rounded-lg">
         <div>
           <p className="text-xs sm:text-sm text-gray-600 mb-1">Verification Status</p>
           {getVerificationBadge(verificationStatus)}
->>>>>>> 5467c3d (Bugs resolved)
         </div>
         <div>
           <p className="text-xs sm:text-sm text-gray-600 mb-1">Account Status</p>
@@ -158,70 +112,25 @@ const VendorDetailsModal = ({ vendor, onClose, onUpdate }) => {
         </div>
         <div>
           <p className="text-xs sm:text-sm text-gray-600 mb-1">Created On</p>
-<<<<<<< HEAD
-          <p className="text-xs sm:text-sm font-medium break-words">
-            {new Date(vendor.created_at).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'short',
-              day: 'numeric'
-            })}
-=======
           <p className="text-xs sm:text-sm font-medium">
             {new Date(vendor.created_at).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' })}
->>>>>>> 5467c3d (Bugs resolved)
           </p>
         </div>
         {vendor.verified_at && (
           <div>
             <p className="text-xs sm:text-sm text-gray-600 mb-1">Verified On</p>
             <p className="text-xs sm:text-sm font-medium">
-<<<<<<< HEAD
-              {new Date(vendor.verified_at).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-              })}
-=======
               {new Date(vendor.verified_at).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' })}
->>>>>>> 5467c3d (Bugs resolved)
             </p>
           </div>
         )}
       </div>
 
-<<<<<<< HEAD
-      {/* Shop Metrics - Responsive */}
-      {(vendor.total_bookings > 0 || vendor.average_rating) && (
-        <div className="grid grid-cols-3 gap-2 sm:gap-4 p-3 sm:p-4 bg-gray-50 rounded-lg border">
-          <div className="text-center">
-            <div className="flex items-center justify-center text-blue-600 mb-1">
-              <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />
-            </div>
-            <p className="text-lg sm:text-2xl font-bold">{vendor.total_bookings || 0}</p>
-            <p className="text-[10px] sm:text-xs text-gray-600">Total Bookings</p>
-          </div>
-          <div className="text-center">
-            <div className="flex items-center justify-center text-yellow-600 mb-1">
-              <Star className="w-4 h-4 sm:w-5 sm:h-5" />
-            </div>
-            <p className="text-lg sm:text-2xl font-bold">{vendor.average_rating || '0.0'}</p>
-            <p className="text-[10px] sm:text-xs text-gray-600">Rating</p>
-          </div>
-          <div className="text-center">
-            <div className="flex items-center justify-center text-green-600 mb-1">
-              <DollarSign className="w-4 h-4 sm:w-5 sm:h-5" />
-            </div>
-            <p className="text-sm sm:text-2xl font-bold break-words">
-              ₹{Number(vendor.total_revenue || 0).toLocaleString()}
-            </p>
-            <p className="text-[10px] sm:text-xs text-gray-600">Revenue</p>
-=======
       {/* Metrics — always show, use 0 as fallback */}
       <div className="grid grid-cols-3 gap-2 sm:gap-4 p-3 sm:p-4 bg-gray-50 rounded-lg border">
         <div className="text-center">
           <div className="flex items-center justify-center text-blue-600 mb-1">
             <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />
->>>>>>> 5467c3d (Bugs resolved)
           </div>
           <p className="text-lg sm:text-2xl font-bold">{vendor.total_bookings ?? 0}</p>
           <p className="text-[10px] sm:text-xs text-gray-600">Total Bookings</p>
@@ -242,10 +151,6 @@ const VendorDetailsModal = ({ vendor, onClose, onUpdate }) => {
         </div>
       </div>
 
-<<<<<<< HEAD
-      {/* Admin Comments - Responsive */}
-=======
->>>>>>> 5467c3d (Bugs resolved)
       {vendor.admin_comments && (
         <div className="p-3 sm:p-4 bg-blue-50 border border-blue-200 rounded-lg">
           <h5 className="font-semibold mb-2 text-sm sm:text-base text-blue-900">Previous Admin Comments</h5>
@@ -253,43 +158,6 @@ const VendorDetailsModal = ({ vendor, onClose, onUpdate }) => {
         </div>
       )}
 
-<<<<<<< HEAD
-      {/* Verification Actions - Responsive */}
-      {vendor.status === 'pending' && (
-        <div className="p-3 sm:p-4 bg-white border rounded-lg">
-          <h5 className="font-semibold mb-3 text-sm sm:text-base">Verification Action</h5>
-          
-          <div className="mb-4">
-            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
-              Comments {vendor.status === 'rejected' && <span className="text-red-500">*</span>}
-            </label>
-            <textarea
-              value={comments}
-              onChange={(e) => setComments(e.target.value)}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-              rows="3"
-              placeholder="Add your comments here..."
-            />
-          </div>
-
-          {/* ✅ Responsive buttons - Stack on mobile, side-by-side on desktop */}
-          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
-            <button
-              onClick={() => handleVerification('approved')}
-              disabled={isSubmitting}
-              className="w-full sm:flex-1 px-4 py-2.5 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 transition font-medium text-sm"
-            >
-              {isSubmitting ? 'Processing...' : 'Approve Vendor'}
-            </button>
-            <button
-              onClick={() => handleVerification('rejected')}
-              disabled={isSubmitting || !comments.trim()}
-              className="w-full sm:flex-1 px-4 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 transition font-medium text-sm"
-            >
-              {isSubmitting ? 'Processing...' : 'Reject Vendor'}
-            </button>
-          </div>
-=======
       {/* Verification actions — shown for pending OR to allow re-decision */}
       <div className="p-3 sm:p-4 bg-white border rounded-lg">
         <h5 className="font-semibold mb-3 text-sm sm:text-base">Verification Action</h5>
@@ -304,7 +172,6 @@ const VendorDetailsModal = ({ vendor, onClose, onUpdate }) => {
             rows="3"
             placeholder="Add your comments here..."
           />
->>>>>>> 5467c3d (Bugs resolved)
         </div>
         <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
           <button
@@ -324,31 +191,16 @@ const VendorDetailsModal = ({ vendor, onClose, onUpdate }) => {
         </div>
       </div>
 
-<<<<<<< HEAD
-      {/* Message - Responsive */}
-      {message && (
-        <div className={`p-3 rounded-lg text-xs sm:text-sm font-medium break-words ${
-=======
       {message && (
         <div className={`p-3 rounded-lg text-xs sm:text-sm font-medium ${
->>>>>>> 5467c3d (Bugs resolved)
           message.includes('✅') ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
         }`}>
           {message}
         </div>
       )}
 
-<<<<<<< HEAD
-      {/* Close Button - Responsive */}
-      <div className="flex justify-end pt-4 border-t">
-        <button
-          onClick={onClose}
-          className="w-full sm:w-auto px-6 py-2.5 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition font-medium text-sm"
-        >
-=======
       <div className="flex justify-end pt-4 border-t">
         <button onClick={onClose} className="w-full sm:w-auto px-6 py-2.5 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition font-medium text-sm">
->>>>>>> 5467c3d (Bugs resolved)
           Close
         </button>
       </div>
@@ -425,13 +277,14 @@ const fetchVendors = useCallback(async () => {
     { header: 'Owner', render: (row) => row.name || 'Unknown' },
     { header: 'Phone', field: 'phone_number' },
     {
-<<<<<<< HEAD
-=======
+      header: 'Email',
+      render: (row) => <span className="text-sm" style={{wordBreak: 'break-all', maxWidth: '200px', display: 'block'}}>{row.email || '—'}</span>
+    },
+    {
       header: 'Location',
       render: (row) => <span className="text-sm">{row.shop_city || row.user_city || 'N/A'}</span>
     },
     {
->>>>>>> 5467c3d (Bugs resolved)
       header: 'Verification',
       render: (row) => {
         // ✅ Use verification_status, not status
