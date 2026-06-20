@@ -382,18 +382,37 @@ const CategoryForm = ({ category, onSubmit, onCancel, isSubmitting }) => {
 
 // Category Details Modal Component
 const CategoryDetailsModal = ({ category, onClose, onEdit }) => {
+  const [services, setServices] = useState([]);
+  const [loadingServices, setLoadingServices] = useState(true);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      setLoadingServices(true);
+      try {
+        const response = await apiService.getAllServices({
+          category: category.category_name,
+          limit: 100,
+          page: 1,
+        });
+        setServices(response.data?.services || []);
+      } catch (e) {
+        console.error('Failed to load services:', e);
+      } finally {
+        setLoadingServices(false);
+      }
+    };
+    fetchServices();
+  }, [category.category_name]);
+
   return (
     <div className="space-y-6">
-      
       {/* Category Header */}
-      <div 
+      <div
         className="p-6 rounded-lg text-white"
         style={{ backgroundColor: category.color || '#3B82F6' }}
       >
         <div className="flex items-center space-x-3">
-          {category.icon && (
-            <div className="text-4xl">{category.icon}</div>
-          )}
+          {category.icon && <div className="text-4xl">{category.icon}</div>}
           <div className="flex-1">
             <h4 className="text-2xl font-bold mb-1">{category.category_name}</h4>
             {category.description && (
@@ -403,63 +422,93 @@ const CategoryDetailsModal = ({ category, onClose, onEdit }) => {
           <div>
             {category.is_active ? (
               <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/20 backdrop-blur">
-                <CheckCircle className="w-3 h-3 mr-1" />
-                Active
+                <CheckCircle className="w-3 h-3 mr-1" />Active
               </span>
             ) : (
               <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/20 backdrop-blur">
-                <XCircle className="w-3 h-3 mr-1" />
-                Inactive
+                <XCircle className="w-3 h-3 mr-1" />Inactive
               </span>
             )}
           </div>
         </div>
       </div>
 
-      {/* Details Grid */}
-      <div className="grid grid-cols-2 gap-4">
+      {/* Stats */}
+      <div className="grid grid-cols-3 gap-4">
         <div className="p-4 bg-gray-50 rounded-lg">
           <p className="text-sm text-gray-600 mb-1">Display Order</p>
           <p className="text-xl font-bold text-gray-900">{category.display_order}</p>
         </div>
         <div className="p-4 bg-gray-50 rounded-lg">
-          <p className="text-sm text-gray-600 mb-1">Services Count</p>
-          <p className="text-xl font-bold text-gray-900">
-            {category.services_count || 0}
-          </p>
+          <p className="text-sm text-gray-600 mb-1">Services</p>
+          <p className="text-xl font-bold text-gray-900">{services.length}</p>
         </div>
+        <div className="p-4 bg-gray-50 rounded-lg">
+          <p className="text-sm text-gray-600 mb-1">Category ID</p>
+          <p className="text-xl font-mono font-bold text-gray-900">{category.category_id}</p>
+        </div>
+      </div>
+
+      {/* Services under this category */}
+      <div>
+        <h5 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+          <span>Services in this Category</span>
+          <span className="px-2 py-0.5 bg-blue-100 text-blue-700 text-xs rounded-full font-medium">
+            {services.length}
+          </span>
+        </h5>
+
+        {loadingServices ? (
+          <div className="flex justify-center py-8">
+            <div className="w-6 h-6 border-3 border-blue-500 border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : services.length === 0 ? (
+          <div className="text-center py-8 bg-gray-50 rounded-lg border border-dashed border-gray-300">
+            <AlertCircle className="w-8 h-8 text-gray-400 mx-auto mb-2" />
+            <p className="text-sm text-gray-500">No services in this category yet.</p>
+          </div>
+        ) : (
+          <div className="space-y-2 max-h-64 overflow-y-auto">
+            {services.map(svc => (
+              <div
+                key={svc.service_id}
+                className="flex items-center justify-between p-3 bg-white border border-gray-200 rounded-lg hover:border-blue-200 hover:bg-blue-50/30 transition"
+              >
+                <div className="flex-1 min-w-0">
+                  <p className="font-medium text-sm text-gray-900 truncate">{svc.service_name}</p>
+                  <p className="text-xs text-gray-500">{svc.duration_minutes} min</p>
+                </div>
+                <div className="flex items-center gap-3 flex-shrink-0 ml-3">
+                  <span className="text-sm font-semibold text-green-700">
+                    ₹{parseFloat(svc.base_price).toFixed(0)}
+                  </span>
+                  <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                    svc.is_available
+                      ? 'bg-green-100 text-green-700'
+                      : 'bg-red-100 text-red-700'
+                  }`}>
+                    {svc.is_available ? 'Available' : 'Unavailable'}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Metadata */}
       <div className="p-4 bg-gray-50 rounded-lg text-sm">
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <p className="text-gray-600">Category ID</p>
-            <p className="font-mono font-medium">{category.category_id}</p>
-          </div>
-          <div>
-            <p className="text-gray-600">Created</p>
-            <p className="font-medium">
-              {new Date(category.created_at).toLocaleDateString()}
-            </p>
-          </div>
-        </div>
+        <p className="text-gray-600">Created</p>
+        <p className="font-medium">{new Date(category.created_at).toLocaleDateString('en-IN')}</p>
       </div>
 
       {/* Actions */}
       <div className="flex justify-end space-x-3 pt-4 border-t">
-        <button
-          onClick={onClose}
-          className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition"
-        >
+        <button onClick={onClose} className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
           Close
         </button>
-        <button
-          onClick={onEdit}
-          className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center"
-        >
-          <Edit className="w-4 h-4 mr-2" />
-          Edit Category
+        <button onClick={onEdit} className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center">
+          <Edit className="w-4 h-4 mr-2" />Edit Category
         </button>
       </div>
     </div>

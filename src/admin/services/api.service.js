@@ -3,7 +3,7 @@
  * Handles all HTTP requests with authentication and error handling
  */
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://72.61.171.34:3000/api';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3306/api';
 
 class ApiService {
   constructor() {
@@ -406,6 +406,23 @@ class ApiService {
 
   async getVendorServicesForBooking(vendorId) {
     return this.get(`/admin/vendors/${vendorId}/services`);
+  }
+
+  async updateDocumentVerification(documentId, data) {
+    const response = await fetch(
+        `${API_BASE_URL}/admin/vendors/documents/${documentId}/verify`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${this.authToken}`
+          },
+          body: JSON.stringify(data)
+        }
+    );
+
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return response.json();
   }
 }
 

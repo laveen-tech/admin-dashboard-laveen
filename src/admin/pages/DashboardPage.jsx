@@ -1,8 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react';
+<<<<<<< HEAD
 import {
   Users, Store, ShoppingBag, DollarSign, Clock,
   TrendingUp, Calendar, CheckCircle, XCircle, AlertCircle,
   ArrowRight, RefreshCw, Star, Package, FileText, Bell
+=======
+import { useNavigate } from 'react-router-dom'; // ✅ Import useNavigate
+import {
+  Users, Store, ShoppingBag, DollarSign, Clock,
+  TrendingUp, Calendar, CheckCircle, XCircle, AlertCircle,
+  ArrowRight, RefreshCw, Star, Package, FileText, Bell, Building2, Scissors
+>>>>>>> 5467c3d (Bugs resolved)
 } from 'lucide-react';
 import apiService from '../services/api.service';
 
@@ -62,7 +70,12 @@ const QuickBtn = ({ icon: Icon, label, badge, accent, onClick }) => (
 );
 
 // ─── Main Component ───────────────────────────────────────────────────────────
+<<<<<<< HEAD
 const DashboardPage = ({ setCurrentPage }) => {
+=======
+const DashboardPage = () => {
+  const navigate = useNavigate(); // ✅ Use React Router's navigation hook
+>>>>>>> 5467c3d (Bugs resolved)
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -74,7 +87,11 @@ const DashboardPage = ({ setCurrentPage }) => {
       else setRefreshing(true);
 
       const response = await apiService.get('/admin/dashboard/stats');
+<<<<<<< HEAD
       console.log('Dashboard API Response:', response); // Debug log
+=======
+      console.log('Dashboard API Response:', response);
+>>>>>>> 5467c3d (Bugs resolved)
       setStats(response.data);
       setError(null);
     } catch (err) {
@@ -90,6 +107,7 @@ const DashboardPage = ({ setCurrentPage }) => {
     fetchStats(); 
   }, [fetchStats]);
 
+<<<<<<< HEAD
   // ── Navigation helper ──────────────────────────────────────────────────────
   const navigateTo = useCallback((page) => {
     if (typeof setCurrentPage === 'function') {
@@ -98,6 +116,13 @@ const DashboardPage = ({ setCurrentPage }) => {
       console.warn('setCurrentPage is not available. Navigation disabled.');
     }
   }, [setCurrentPage]);
+=======
+  // ── Navigation helper - USES REACT ROUTER ────────────────────────────────────
+  const navigateTo = useCallback((page) => {
+    console.log('Navigating to:', page);
+    navigate(`/admin/${page}`); // ✅ React Router navigation
+  }, [navigate]);
+>>>>>>> 5467c3d (Bugs resolved)
 
   // ── Derived values from API response ──────────────────────────────────────
   const userStats = stats?.userStats || [];
@@ -106,9 +131,14 @@ const DashboardPage = ({ setCurrentPage }) => {
   
   // User counts
   const totalUsers = userStats.reduce((sum, u) => sum + Number(u.count || 0), 0);
+<<<<<<< HEAD
   const customerCount = Number(userStats.find(u => u.user_type === 'customer')?.count || 0);
   const vendorCount = Number(userStats.find(u => u.user_type === 'vendor')?.count || 0);
   const adminCount = Number(userStats.find(u => u.user_type === 'admin')?.count || 0);
+=======
+  const customerCount = Number(userStats.find(u => u.user_type?.toUpperCase() === 'CUSTOMER')?.count || 0);
+  const vendorCount = Number(userStats.find(u => u.user_type?.toUpperCase() === 'VENDOR')?.count || 0);
+>>>>>>> 5467c3d (Bugs resolved)
   
   // Booking counts
   const totalBookings = Number(bookingStats.total_bookings || 0);
@@ -137,7 +167,10 @@ const DashboardPage = ({ setCurrentPage }) => {
   
   const recentUsers = stats?.recentUsers || [];
   const recentBookings = stats?.recentBookings || [];
+<<<<<<< HEAD
   const monthlyRevenue = stats?.monthlyRevenue || [];
+=======
+>>>>>>> 5467c3d (Bugs resolved)
 
   // ── Loading State ──────────────────────────────────────────────────────────
   if (loading) {
@@ -203,7 +236,11 @@ const DashboardPage = ({ setCurrentPage }) => {
           value={totalUsers.toLocaleString('en-IN')}
           sub={`${customerCount} customers · ${vendorCount} vendors`}
           color="bg-blue-500"
+<<<<<<< HEAD
           onClick={() => navigateTo('users')}
+=======
+          onClick={() => navigateTo('customers')}
+>>>>>>> 5467c3d (Bugs resolved)
         />
         <StatCard
           icon={Store}
@@ -271,7 +308,11 @@ const DashboardPage = ({ setCurrentPage }) => {
           </div>
           <div 
             className="bg-white bg-opacity-10 rounded-xl p-3 text-center cursor-pointer hover:bg-opacity-20 transition-all"
+<<<<<<< HEAD
             onClick={() => navigateTo('users')}
+=======
+            onClick={() => navigateTo('customers')}
+>>>>>>> 5467c3d (Bugs resolved)
           >
             <p className="text-2xl font-extrabold">{todayCustomers}</p>
             <p className="text-xs opacity-75 mt-0.5">New Customers</p>
@@ -310,13 +351,21 @@ const DashboardPage = ({ setCurrentPage }) => {
               <p className="text-sm text-gray-500">Services</p>
               <p className="text-2xl font-bold text-gray-900 mt-1">{servicesCount}</p>
             </div>
+<<<<<<< HEAD
             <Package className="w-8 h-8 text-pink-500" />
+=======
+            <Scissors className="w-8 h-8 text-pink-500" />
+>>>>>>> 5467c3d (Bugs resolved)
           </div>
         </div>
 
         <div 
           className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 cursor-pointer hover:shadow-md transition-all"
+<<<<<<< HEAD
           onClick={() => navigateTo('users')}
+=======
+          onClick={() => navigateTo('customers')}
+>>>>>>> 5467c3d (Bugs resolved)
         >
           <div className="flex items-center justify-between">
             <div>
@@ -390,7 +439,11 @@ const DashboardPage = ({ setCurrentPage }) => {
               Recent Users
             </h2>
             <button
+<<<<<<< HEAD
               onClick={() => navigateTo('users')}
+=======
+              onClick={() => navigateTo('customers')}
+>>>>>>> 5467c3d (Bugs resolved)
               className="text-xs text-amber-700 hover:underline flex items-center gap-1"
             >
               View all <ArrowRight className="w-3 h-3" />
@@ -402,7 +455,11 @@ const DashboardPage = ({ setCurrentPage }) => {
                 <div 
                   key={user.user_id || i} 
                   className="flex items-center gap-3 py-2 border-b border-gray-50 last:border-0 cursor-pointer hover:bg-gray-50 rounded-lg px-2 transition-all"
+<<<<<<< HEAD
                   onClick={() => navigateTo('users')}
+=======
+                  onClick={() => navigateTo('customers')}
+>>>>>>> 5467c3d (Bugs resolved)
                 >
                   <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-600 to-amber-900 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
                     {(user.name || 'U').charAt(0).toUpperCase()}
@@ -438,7 +495,11 @@ const DashboardPage = ({ setCurrentPage }) => {
               icon={Users}
               label="Manage Customers"
               accent="bg-blue-50 text-blue-700 border-blue-100"
+<<<<<<< HEAD
               onClick={() => navigateTo('users')}
+=======
+              onClick={() => navigateTo('customers')}
+>>>>>>> 5467c3d (Bugs resolved)
             />
             <QuickBtn
               icon={Store}
@@ -448,13 +509,26 @@ const DashboardPage = ({ setCurrentPage }) => {
               onClick={() => navigateTo('vendors')}
             />
             <QuickBtn
+<<<<<<< HEAD
+=======
+              icon={Building2}
+              label="Manage Shops"
+              accent="bg-cyan-50 text-cyan-700 border-cyan-100"
+              onClick={() => navigateTo('shops')}
+            />
+            <QuickBtn
+>>>>>>> 5467c3d (Bugs resolved)
               icon={ShoppingBag}
               label="View Bookings"
               accent="bg-green-50 text-green-700 border-green-100"
               onClick={() => navigateTo('bookings')}
             />
             <QuickBtn
+<<<<<<< HEAD
               icon={Package}
+=======
+              icon={Scissors}
+>>>>>>> 5467c3d (Bugs resolved)
               label="Manage Services"
               accent="bg-pink-50 text-pink-700 border-pink-100"
               onClick={() => navigateTo('services')}

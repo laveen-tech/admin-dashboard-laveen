@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+@keyframes shrink-bar {
+  from { width: 100%; }
+  to   { width: 0%; }
+}
