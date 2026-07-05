@@ -5,7 +5,7 @@ import {
 } from 'lucide-react';
 import apiService from '../../services/api.service';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL.replace(/\/api\/?$/, '');
+const API_BASE_URL = 'https://saloon-booking-management.onrender.com';
 
 const getFullUrl = (url) => {
   if (!url) return '';
